@@ -20,7 +20,7 @@
     ;
     ;
     ;
-    call disable_display_and_sound
+    ;
     ; Load the pico-8 palette to colors 16-31.
     ld a,SPRITE_PALETTE_START
     ld b,PICO8_PALETTE_SIZE
@@ -31,10 +31,6 @@
     ld b,PICO8_PALETTE_SIZE
     ld hl,pico8_palette_sms
     call load_cram
-    ; Load the font tiles.
-    SELECT_BANK FONT_BANK
-    ld hl,font_table
-    call load_vram_from_table
     ;
     ; Blank left column.
     ld a,SCROLL_0__LCB_1_LINE_0_SPRITES_0
