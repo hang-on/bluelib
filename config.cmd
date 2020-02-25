@@ -1,4 +1,4 @@
 :: Build configuration file
 
-SET binary=binaries\astroswab.sms
+SET binary=binaries\demo.sms
 SET main=main.asm

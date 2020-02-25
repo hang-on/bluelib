@@ -1,0 +1,30 @@
+; this file was created with wlalink by ville helin <vhelin@iki.fi>.
+; wla symbolic information for "binaries\demo.sms".
+
+[labels]
+0000:c0c2 VDPStatus
+0000:c0c3 pause_flag
+0000:c0c4 input_ports
+0000:c0c6 tv_type
+0000:0000 boot
+0000:001d _MapperInitData
+0000:0021 ClearRam
+0000:002d _FillMemory
+0000:00a5 ClearVRam
+0000:0071 _VDPRegisterInitData
+0000:007c InitializeVDPRegisters
+0000:00c8 load_cram
+0000:00d5 set_register
+0000:c000 SpriteBufferY
+0000:c040 SpriteBufferXC
+0000:c0c0 NextFreeSprite
+0000:c0c1 SATLoadMode
+0000:c0c7 cursor_y
+0000:c0c8 cursor_x
+0000:c0c9 my_byte_var
+0000:0042 init
+0000:0060 main_loop
+0001:4000 pico8_palette_sms
+0000:008f *WLA_SDSC_PRG_AUTHOR_PTR
+0000:00dd *WLA_SDSC_PRG_NAME_PTR
+0000:00b9 *WLA_SDSC_PRG_NOTES_PTR
