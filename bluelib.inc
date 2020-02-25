@@ -248,9 +248,6 @@
   call ClearRam ; Except the top (stack, slot/bank registers, etc.)
   call ClearVRam
 
-  call detect_tv_type ; Beware! Messes with interrupts and vdp-registers.
-  ld (tv_type),a
-
   call InitializeVDPRegisters
 
   jp init
