@@ -22,8 +22,8 @@
     ;
     ;
     ; Load the pico-8 palette to colors 0-31.
-    ld a,BACKGROUND_PALETTE_START
-    ld b,SYSTEM_PALETTE_SIZE
+    ld a,CRAM_FIRST_COLOR
+    ld b,CRAM_MAX_COLORS
     ld hl,pico8_palette_sms
     call load_cram
     ;
