@@ -18,7 +18,6 @@
     ; Load the pico-8 palette to colors 16-31.
     ; Note: We can also come here from reset!
     ;
-    di
     ;
     ;
     call disable_display_and_sound
