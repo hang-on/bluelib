@@ -762,10 +762,11 @@
 ; -----------------------------------------------------------------------------
 .section "load_cram" free
 ; -----------------------------------------------------------------------------
-  ; Load a number of colors into color ram (SMS).
-  ; Entry: A = Palette index (0-31)
-  ;        B = Number of colors to load
-  ;        HL = Base address of source data (color bytes, SMS)
+  ; Consecutively load a number of color values into color ram (CRAM), given a
+  ; destination color to write the first value.
+  ; Entry: A = Destination color in color ram (0-31)
+  ;        B = Number of color values to load
+  ;        HL = Base address of source data (color values are bytes = SMS)
   ; Uses: AF, BC, HL
   ; Assumes blanked display and interrupts off.
   load_cram:
