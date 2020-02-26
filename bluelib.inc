@@ -271,11 +271,15 @@
   im 1
   ld sp,STACK_INIT_ADDRESS
 
-  ; Initialize the standard Sega mapper.
+  ; Initialize the memory control registers.
   ld de,$fffc
-  ld hl,_MapperInitData
+  ld hl,memory_control_register_values
   ld bc,$0004
   ldir
+  jr +
+    memory_control_register_values:
+      .db $00,$00,$01,$02
+  +:
 
   call ClearRam ; Except the top (stack, slot/bank registers, etc.)
   call ClearVRam
@@ -284,8 +288,7 @@
 
   jp init
 
-  _MapperInitData:
-    .db $00,$00,$01,$02
+
 .ends
 
 .ifdef INCLUDE_VDP_INTERRUPT_HANDLER
