@@ -15,13 +15,11 @@
   init:
     ; Run this function once (on game load). Assume we come here from bluelib
     ; boot code with ram, vram, mappers and registers initialized.
-    ; Load the pico-8 palette to colors 16-31.
-    ; Note: We can also come here from reset!
     ;
-    ; Load a duplicated pico8 palette (2 x 16 colors) to colors 0-15 and 16-31.
+    ; Load color values to CRAM, starting from color 0.
     ld a,COLOR_0
-    ld b,duplicated_pico8_palette_end-duplicated_pico8_palette
-    ld hl,duplicated_pico8_palette
+    ld b,colors_end-colors
+    ld hl,colors
     call load_cram
     ;
     ; Blank left column.

@@ -24,8 +24,8 @@
 0000:c0c9 my_byte_var
 0000:0071 init
 0000:0085 main_loop
-0001:4000 duplicated_pico8_palette
-0001:4020 duplicated_pico8_palette_end
+0001:4000 colors
+0001:4020 colors_end
 0000:0088 *WLA_SDSC_PRG_AUTHOR_PTR
 0000:00d6 *WLA_SDSC_PRG_NAME_PTR
 0000:00b2 *WLA_SDSC_PRG_NOTES_PTR
