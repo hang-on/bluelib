@@ -7,7 +7,7 @@
 0000:c0c4 input_ports
 0000:c0c6 tv_type
 0000:0000 boot
-0000:0013 memory_control_register_values
+0000:0013 initial_memory_control_register_values
 0000:0071 ClearRam
 0000:007d _FillMemory
 0000:0023 ClearVRam

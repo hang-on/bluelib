@@ -4,7 +4,7 @@
 ; *****************************************************************************
 ;                              BASE LIBRARY
 ; *****************************************************************************
-.equ ROMSIZE 256                      ; Make a 128k or 256k rom.
+.equ ROMSIZE 128                      ; Make a 128k or 256k rom.
 .equ INCLUDE_VDP_INTERRUPT_HANDLER    ; Comment out to exclude it.
 .equ INCLUDE_PAUSE_BUTTON_HANDLER     ; Comment out to exclude it.
 ; -----------------------------------------------------------------------------
@@ -273,11 +273,11 @@
 
   ; Initialize the memory control registers.
   ld de,$fffc
-  ld hl,memory_control_register_values
+  ld hl,initial_memory_control_register_values
   ld bc,$0004
   ldir
   jr +
-    memory_control_register_values:
+    initial_memory_control_register_values:
       .db $00,$00,$01,$02
   +:
 
