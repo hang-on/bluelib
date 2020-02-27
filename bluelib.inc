@@ -270,25 +270,23 @@
   di
   im 1
   ld sp,STACK_INIT_ADDRESS
-
+  ;
   ; Initialize the memory control registers.
   ld de,$fffc
   ld hl,initial_memory_control_register_values
   ld bc,$0004
   ldir
-  jr +
-    initial_memory_control_register_values:
-      .db $00,$00,$01,$02
-  +:
-
+  ;
   call ClearRam ; Except the top (stack, slot/bank registers, etc.)
   call ClearVRam
-
+  ;
   call InitializeVDPRegisters
-
+  ;
   jp init
-
-
+  :
+  initial_memory_control_register_values:
+    .db $00,$00,$01,$02
+  ;
 .ends
 
 .ifdef INCLUDE_VDP_INTERRUPT_HANDLER
