@@ -277,7 +277,10 @@
   ld bc,initial_memory_control_register_values_end-initial_memory_control_register_values
   ldir
   ;
-  call ClearRam ; Except the top (stack, slot/bank registers, etc.)
+  ;call ClearRam ; Except the top (stack, slot/bank registers, etc.)
+  ;
+  ;
+  ;
   call ClearVRam
   ;
   call InitializeVDPRegisters
