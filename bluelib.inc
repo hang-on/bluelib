@@ -72,7 +72,7 @@
 ;
 ; Memory map and initialization:
 .equ RAM_START $c000
-.equ STACK_INIT_ADDRESS $dff0
+.equ INITIAL_STACK_ADDRESS $dff0
 
 ; Port communication and control:
 .equ SYSTEM_CONTROL_PORT $00          ; GG: start, region, ntsc/pal.
@@ -269,7 +269,7 @@
   boot:
   di
   im 1
-  ld sp,STACK_INIT_ADDRESS
+  ld sp,INITIAL_STACK_ADDRESS
   ;
   ; Initialize the memory control registers.
   ld de,$fffc
@@ -371,11 +371,11 @@
 ; -----------------------------------------------------------------------------
 .section "ClearRam" free
 ; -----------------------------------------------------------------------------
-  ; Overwrite ram with zeroes from RAM_START to STACK_INIT_ADDRESS - 16
+  ; Overwrite ram with zeroes from RAM_START to INITIAL_STACK_ADDRESS - 16
   ; Uses AF, BC, DE, HL
   ClearRam:
     ld hl,RAM_START
-    ld bc,STACK_INIT_ADDRESS-16-RAM_START
+    ld bc,INITIAL_STACK_ADDRESS-16-RAM_START
     ld a,0
     call _FillMemory
   ret
