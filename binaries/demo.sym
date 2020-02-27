@@ -9,6 +9,7 @@
 0000:0000 boot
 0000:001d k287
 0000:001d initial_memory_control_register_values
+0000:0021 initial_memory_control_register_values_end
 0000:0021 ClearRam
 0000:002d _FillMemory
 0000:009e ClearVRam

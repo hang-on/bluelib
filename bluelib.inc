@@ -274,7 +274,7 @@
   ; Initialize the memory control registers.
   ld de,$fffc
   ld hl,initial_memory_control_register_values
-  ld bc,$0004
+  ld bc,initial_memory_control_register_values_end-initial_memory_control_register_values
   ldir
   ;
   call ClearRam ; Except the top (stack, slot/bank registers, etc.)
@@ -286,6 +286,7 @@
   :
   initial_memory_control_register_values:
     .db $00,$00,$01,$02
+    initial_memory_control_register_values_end:
   ;
 .ends
 
