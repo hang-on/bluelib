@@ -88,20 +88,6 @@
 .equ REGISTER_WRITE_COMMAND %10000000
 .equ CRAM_WRITE_COMMAND %11000000
 .equ VRAM_SIZE $4000                  ; 16K
-
-; --- NB! Developed for GG -------------------
-; Register 0 settings:
-.equ SCROLL_0_LINE_0_SPRITES_0 %00000110
-; Register 1 settings:
-.equ DISPLAY_1_FRAME_1_SIZE_0 %11100000
-.equ DISPLAY_0_FRAME_1_SIZE_0 %10100000
-.equ DISPLAY_0_FRAME_0_SIZE_0 %10000000
-.equ DISPLAY_1_FRAME_1_SIZE_0_ZOOM %11100001
-; ---------------------------------------------
-; Name based on variation from statup setting:
-.equ SCROLL_0__LCB_1_LINE_0_SPRITES_0 %00100110
-.equ SCROLL_0__LCB_0_LINE_0_SPRITES_0 %00000110
-
 ;
 .equ HORIZONTAL_SCROLL_REGISTER 8
 .equ VERTICAL_SCROLL_REGISTER 9
