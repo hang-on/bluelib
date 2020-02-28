@@ -7,14 +7,14 @@
 0000:c0c4 input_ports
 0000:c0c6 tv_type
 0000:0000 boot
-0000:001a k287
+0000:001a k288
 0000:001a initial_memory_control_register_values
 0000:001e initial_memory_control_register_values_end
 0000:0087 clear_vram
 0000:0042 _VDPRegisterInitData
 0000:004d InitializeVDPRegisters
-0000:00aa load_cram
-0000:00b7 set_register
+0000:00ac load_cram
+0000:00b9 set_register
 0000:c000 SpriteBufferY
 0000:c040 SpriteBufferXC
 0000:c0c0 NextFreeSprite
@@ -27,5 +27,5 @@
 0001:4000 colors
 0001:4020 colors_end
 0000:0071 *WLA_SDSC_PRG_AUTHOR_PTR
-0000:00bf *WLA_SDSC_PRG_NAME_PTR
-0000:009b *WLA_SDSC_PRG_NOTES_PTR
+0000:00c1 *WLA_SDSC_PRG_NAME_PTR
+0000:009d *WLA_SDSC_PRG_NOTES_PTR

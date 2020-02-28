@@ -87,6 +87,7 @@
 .equ VRAM_READ_COMMAND %00000000
 .equ REGISTER_WRITE_COMMAND %10000000
 .equ CRAM_WRITE_COMMAND %11000000
+.equ VRAM_SIZE $4000                  ; 16K
 
 ; --- NB! Developed for GG -------------------
 ; Register 0 settings:
@@ -380,7 +381,7 @@
     out (CONTROL_PORT),a
     or VRAM_WRITE_COMMAND
     out (CONTROL_PORT),a
-    ld bc,$4000 ; 16K
+    ld bc,VRAM_SIZE
     -:
       xor a
       out (DATA_PORT),a
