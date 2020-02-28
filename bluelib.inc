@@ -277,9 +277,6 @@
   ld bc,initial_memory_control_register_values_end-initial_memory_control_register_values
   ldir
   ;
-  ;call ClearRam ; Except the top (stack, slot/bank registers, etc.)
-  ;
-  ;
   ;
   call ClearVRam
   ;
@@ -369,31 +366,6 @@
       or c
     jp nz,-
     SELECT_ROM
-  ret
-.ends
-;
-; -----------------------------------------------------------------------------
-.section "ClearRam" free
-; -----------------------------------------------------------------------------
-  ; Overwrite ram with zeroes from RAM_START to INITIAL_STACK_ADDRESS - 16
-  ; Uses AF, BC, DE, HL
-  ClearRam:
-    ld hl,RAM_START
-    ld bc,INITIAL_STACK_ADDRESS-16-RAM_START
-    ld a,0
-    call _FillMemory
-  ret
-
-  _FillMemory:
-    ld (hl),a
-    ld d,h
-    ld e,l
-    inc de
-    dec bc
-    ld a,b
-    or c
-    ret z
-    ldir
   ret
 .ends
 ;

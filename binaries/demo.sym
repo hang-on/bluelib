@@ -7,7 +7,7 @@
 0000:c0c4 input_ports
 0000:c0c6 tv_type
 0000:0000 boot
-0000:001a k290
+0000:001a k287
 0000:001a initial_memory_control_register_values
 0000:001e initial_memory_control_register_values_end
 0000:0087 ClearVRam
