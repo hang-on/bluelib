@@ -22,9 +22,6 @@
     ld hl,colors
     call load_cram
     ;
-    ;
-    call InitializeVDPRegisters
-    ;
     ; Blank left column.
     ld a,SCROLL_0__LCB_1_LINE_0_SPRITES_0
     ld b,REGISTER_0
@@ -42,26 +39,5 @@
   ; ---------------------------------------------------------------------------
 .ends
 ;
-;
-; -----------------------------------------------------------------------------
-.section "InitializeVDPRegisters" free
-; -----------------------------------------------------------------------------
-  ; Initialize the 11 VDP registers with the preset data block.
-  ; Uses: AF, B, HL
-  InitializeVDPRegisters:
-    ld hl,VDPRegisterInitData
-    xor b
-    -:
-      ld a,(hl)
-      out (CONTROL_PORT),a
-      inc hl
-      ld a,b
-      or REGISTER_WRITE_COMMAND
-      out (CONTROL_PORT),a
-      cp REGISTER_WRITE_COMMAND|10
-      ret z
-      inc b
-    jr -
-.ends
 ;
 .include "footer.inc"
