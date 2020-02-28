@@ -18,7 +18,8 @@
 0000:c0c1 SATLoadMode
 0000:c0c7 cursor_y
 0000:c0c8 cursor_x
-0000:c0c9 my_byte_var
+0000:c0c9 temp_byte
+0000:c0ca temp_word
 0000:001b init
 0000:002f main_loop
 0001:4000 colors

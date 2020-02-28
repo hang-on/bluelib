@@ -7,6 +7,7 @@
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 .ramsection "Main variables" slot 3
   ;
-  my_byte_var db                  ; Comment.
+  temp_byte db                  ; Temporary variable - byte.
+  temp_word db                  ; Temporary variable - word.
   ;
 .ends
