@@ -10,7 +10,7 @@
 0000:001a k287
 0000:001a initial_memory_control_register_values
 0000:001e initial_memory_control_register_values_end
-0000:0087 ClearVRam
+0000:0087 clear_vram
 0000:0042 _VDPRegisterInitData
 0000:004d InitializeVDPRegisters
 0000:00aa load_cram

@@ -278,7 +278,7 @@
   ldir
   ;
   ;
-  call ClearVRam
+  call clear_vram
   ;
   call InitializeVDPRegisters
   ;
@@ -370,11 +370,12 @@
 .ends
 ;
 ; -----------------------------------------------------------------------------
-.section "ClearVRam" free
+.section "clear_vram" free
 ; -----------------------------------------------------------------------------
-  ; Write 00 to all vram positions. Assumes disabled display.
+  ; Safely write 00 to all vram addresses.
   ; Uses AF, BC
-  ClearVRam:
+  clear_vram:
+    di
     xor a
     out (CONTROL_PORT),a
     or VRAM_WRITE_COMMAND
@@ -387,6 +388,7 @@
       ld a,b
       or c
     jp nz,-
+    ei
   ret
 .ends
 ;
