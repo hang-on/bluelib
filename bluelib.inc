@@ -98,6 +98,7 @@
 .equ DISPLAY_0_FRAME_0_SIZE_0 %10000000
 .equ DISPLAY_1_FRAME_1_SIZE_0_ZOOM %11100001
 ; ---------------------------------------------
+; Name based on variation from statup setting:
 .equ SCROLL_0__LCB_1_LINE_0_SPRITES_0 %00100110
 .equ SCROLL_0__LCB_0_LINE_0_SPRITES_0 %00000110
 
