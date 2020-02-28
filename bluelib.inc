@@ -570,32 +570,6 @@
 .ends
 ;
 ; -----------------------------------------------------------------------------
-.section "InitializeVDPRegisters" free
-; -----------------------------------------------------------------------------
-; Initialize the 11 VDP registers with the preset data block.
-; Uses: AF, B, HL
-  _VDPRegisterInitData:
-    .db SCROLL_0_LINE_0_SPRITES_0
-    .db DISPLAY_0_FRAME_0_SIZE_0
-    .db $ff,$ff,$ff,$ff,$ff,$00,$00,$00,$ff
-
-  InitializeVDPRegisters:
-    ld hl,_VDPRegisterInitData
-    xor b
-    -:
-      ld a,(hl)
-      out (CONTROL_PORT),a
-      inc hl
-      ld a,b
-      or REGISTER_WRITE_COMMAND
-      out (CONTROL_PORT),a
-      cp REGISTER_WRITE_COMMAND|10
-      ret z
-      inc b
-    jr -
-.ends
-;
-; -----------------------------------------------------------------------------
 .section "is_dpad_pressed" free
 ; -----------------------------------------------------------------------------
   is_dpad_pressed:

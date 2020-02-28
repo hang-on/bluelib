@@ -9,11 +9,9 @@
 0000:0000 boot
 0000:0017 initial_memory_control_register_values
 0000:001b initial_memory_control_register_values_end
-0000:0087 clear_vram
-0000:0042 _VDPRegisterInitData
-0000:004d InitializeVDPRegisters
-0000:00ac load_cram
-0000:00b9 set_register
+0000:0042 clear_vram
+0000:0058 load_cram
+0000:00a9 set_register
 0000:c000 SpriteBufferY
 0000:c040 SpriteBufferXC
 0000:c0c0 NextFreeSprite
@@ -23,8 +21,10 @@
 0000:c0c9 my_byte_var
 0000:001b init
 0000:0032 main_loop
+0000:0087 InitializeVDPRegisters
 0001:4000 colors
 0001:4020 colors_end
+0001:4020 VDPRegisterInitData
 0000:0071 *WLA_SDSC_PRG_AUTHOR_PTR
-0000:00c1 *WLA_SDSC_PRG_NAME_PTR
-0000:009d *WLA_SDSC_PRG_NOTES_PTR
+0000:00b1 *WLA_SDSC_PRG_NAME_PTR
+0000:009a *WLA_SDSC_PRG_NOTES_PTR

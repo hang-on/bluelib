@@ -42,4 +42,26 @@
   ; ---------------------------------------------------------------------------
 .ends
 ;
+;
+; -----------------------------------------------------------------------------
+.section "InitializeVDPRegisters" free
+; -----------------------------------------------------------------------------
+  ; Initialize the 11 VDP registers with the preset data block.
+  ; Uses: AF, B, HL
+  InitializeVDPRegisters:
+    ld hl,VDPRegisterInitData
+    xor b
+    -:
+      ld a,(hl)
+      out (CONTROL_PORT),a
+      inc hl
+      ld a,b
+      or REGISTER_WRITE_COMMAND
+      out (CONTROL_PORT),a
+      cp REGISTER_WRITE_COMMAND|10
+      ret z
+      inc b
+    jr -
+.ends
+;
 .include "footer.inc"
