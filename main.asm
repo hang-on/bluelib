@@ -22,6 +22,9 @@
     ld hl,colors
     call load_cram
     ;
+    ;
+    call InitializeVDPRegisters
+    ;
     ; Blank left column.
     ld a,SCROLL_0__LCB_1_LINE_0_SPRITES_0
     ld b,REGISTER_0

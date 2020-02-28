@@ -281,8 +281,6 @@
   ;
   call clear_vram
   ;
-  call InitializeVDPRegisters
-  ;
   jp init
   ;
   initial_memory_control_register_values:

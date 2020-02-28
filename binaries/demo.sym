@@ -7,8 +7,8 @@
 0000:c0c4 input_ports
 0000:c0c6 tv_type
 0000:0000 boot
-0000:001a initial_memory_control_register_values
-0000:001e initial_memory_control_register_values_end
+0000:0017 initial_memory_control_register_values
+0000:001b initial_memory_control_register_values_end
 0000:0087 clear_vram
 0000:0042 _VDPRegisterInitData
 0000:004d InitializeVDPRegisters
@@ -21,7 +21,7 @@
 0000:c0c7 cursor_y
 0000:c0c8 cursor_x
 0000:c0c9 my_byte_var
-0000:001e init
+0000:001b init
 0000:0032 main_loop
 0001:4000 colors
 0001:4020 colors_end
