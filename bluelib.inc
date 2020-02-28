@@ -284,7 +284,7 @@
   call InitializeVDPRegisters
   ;
   jp init
-  :
+  ;
   initial_memory_control_register_values:
     .db $00,$00,$01,$02
     initial_memory_control_register_values_end:
