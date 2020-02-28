@@ -22,11 +22,6 @@
     ld hl,colors
     call load_cram
     ;
-    ; Blank left column.
-    ld a,SCROLL_0__LCB_1_LINE_0_SPRITES_0
-    ld b,REGISTER_0
-    call set_register
-    ;
   jp main_loop
   ;
   ; ---------------------------------------------------------------------------
