@@ -272,7 +272,7 @@
     push hl
       in a,CONTROL_PORT
       bit 7,a
-      jp nz,+
+      jp z,+
         ; VBlank interrupt.
         ld hl,vblank_interrupt_total
         inc (hl)
