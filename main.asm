@@ -17,7 +17,6 @@
     ; boot code with initialized vram and memory control registers. VDP
     ; are initialized by the hardware.
     ;
-    ; Load color values to CRAM, starting from color 0.
     ld a,COLOR_0
     ld b,colors_end-colors
     ld hl,colors
