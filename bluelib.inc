@@ -945,20 +945,20 @@
 ; -----------------------------------------------------------------------------
   WipeData:
     .rept 64
-      .db INVISIBLE_AREA_TOP_BORDER
+      .db SPRITE_TERMINATOR
     .endr
-
+  ;
   begin_sprites:
     ; Reset the NextFreeSprite index at the beginning of every frame
     xor a
     ld (NextFreeSprite),a
-
+    ;
     ; Toggle ascending/descending sat load mode.
     ld a,(SATLoadMode)
     cpl
     ld (SATLoadMode),a
-
-    ; Wipe Y-buffer with $e0 to get unused sprites out of the way.
+    ;
+    ; Wipe Y-buffer to get unused sprites out of the way.
     ld hl,WipeData
     ld de,SpriteBufferY
     ld bc,64
