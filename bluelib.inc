@@ -58,6 +58,8 @@
 .equ PAL 1
 .equ FIRST_LINE_OF_VBLANK 192
 ;
+.equ INTERRUPT_TYPE_BIT 7
+;
 .equ REGISTER_0 0
 .equ REGISTER_1 1
 .equ REGISTER_2 2
@@ -271,7 +273,7 @@
     push af
     push hl
       in a,CONTROL_PORT
-      bit 7,a
+      bit INTERRUPT_TYPE_BIT,a
       jp z,+
         ; VBlank interrupt.
         ld hl,vblank_interrupt_total
