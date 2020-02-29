@@ -1,3 +1,21 @@
+.equ BYTES_PER_TILE 32
+.equ ONE_TILEMAP_ROW 32*2
+.equ END_OF_TABLE $ff
+
+; Font / printing support.
+.equ CHARS_IN_ASCII_SET 91
+.equ STRING_TERMINATOR 3        ; Terminate strings with #
+.equ ASCII_ZERO 16        ; Where in the tilebank is the ASCII zero?
+.equ ASCII_ONE 17
+.equ ASCII_NINE ASCII_ZERO+9
+.equ ASCII_SPACE 0
+.equ ASCII_EXCLAMATION 1
+.equ ASCII_TABLE_START 0
+.asciitable
+  map " " to "z" = ASCII_TABLE_START
+.enda
+
+
 ; -----------------------------------------------------------------------------
 .section "load_vdp_registers" free
 ; -----------------------------------------------------------------------------
