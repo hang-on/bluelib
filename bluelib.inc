@@ -71,7 +71,6 @@
 .equ REGISTER_8 8
 .equ REGISTER_9 9
 .equ REGISTER_10 10
-.equ REGISTER_11 11
 ;
 ; Memory map and initialization:
 .equ RAM_START $c000
