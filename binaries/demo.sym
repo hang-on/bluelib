@@ -15,8 +15,6 @@
 0000:c040 SpriteBufferXC
 0000:c0c0 NextFreeSprite
 0000:c0c1 SATLoadMode
-0000:c0c9 cursor_y
-0000:c0ca cursor_x
 0000:c0c7 temp_byte
 0000:c0c8 temp_word
 0000:0071 init
