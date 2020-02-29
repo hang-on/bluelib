@@ -228,6 +228,8 @@
 .ramsection "bluelib global variables" slot 3
 ; -----------------------------------------------------------------------------
   VDPStatus db
+  vblank_interrupt_total db
+  hline_interrupt_total db
   pause_flag db
   input_ports dw
   tv_type db
@@ -267,8 +269,20 @@
   .section "!VDP interrupt" force
   ; ---------------------------------------------------------------------------
     push af
+    push hl
       in a,CONTROL_PORT
-      ld (VDPStatus),a
+      bit 7,a
+      jp nz,+
+        ; VBlank interrupt.
+        ld hl,vblank_interrupt_total
+        inc (hl)
+        jp ++
+      +:
+        ; H-Line interrupt.
+        ld hl,hline_interrupt_total
+        inc (hl)
+      ++:
+    pop hl
     pop af
     ei
     reti
