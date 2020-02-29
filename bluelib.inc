@@ -358,10 +358,9 @@
 ; -----------------------------------------------------------------------------
 .section "clear_vram" free
 ; -----------------------------------------------------------------------------
-  ; Safely write 00 to all vram addresses.
+  ; Write 00 to all vram addresses.
   ; Uses AF, BC
   clear_vram:
-    di
     xor a
     out (CONTROL_PORT),a
     or VRAM_WRITE_COMMAND
@@ -374,7 +373,6 @@
       ld a,b
       or c
     jp nz,-
-    ei
   ret
 .ends
 ;
