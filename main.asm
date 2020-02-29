@@ -14,8 +14,7 @@
 ; -----------------------------------------------------------------------------
   init:
     ; Run this function once (on game load). Assume we come here from bluelib
-    ; boot code with initialized vram and memory control registers. VDP
-    ; are initialized by the hardware.
+    ; boot code with initialized vram and memory control registers.
     ;
     ld a,COLOR_0
     ld b,colors_end-colors
