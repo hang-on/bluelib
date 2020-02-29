@@ -23,7 +23,7 @@
     ld hl,colors
     call load_cram
     ;
-    ld bc,$0020
+    ld bc,CHARACTER_SIZE
     ld de,$0000
     ld hl,character
     call load_vram
