@@ -851,17 +851,23 @@
 .ends
 ;
 ; -----------------------------------------------------------------------------
-.section "Wait for scanline" free
+.section "Wait and reset" free
 ; -----------------------------------------------------------------------------
-  ; Wait for a specific scanline passed in A.
-  ; Entry: A = Scanline to wait for.
-  ; Uses: AF, B
-  wait_for_scanline:
+  ; Wait for an interrupt counter pointed to by HL to reach a given threshold.
+  ; Then reset the interrupt counter before moving on.
+  ; Entry: A = Threshold value.
+  ;        HL = Pointer to bluelib interrupt counter.
+  ; Uses: AF
+  wait_and_reset:
+    push bc
     ld b,a
     -:
-      in a,(V_COUNTER_PORT)
+      ld a,(hl)
       cp b
     jp nz,-
+    xor a
+    ld (hl),a
+    pop bc
   ret
 .ends
 ;

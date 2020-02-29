@@ -28,13 +28,20 @@
     ;
     ;
     ei
+    ld hl,vblank_interrupt_total
+    ld a,2
+    call wait_and_reset
     ;
   jp main_loop
   ;
   ; ---------------------------------------------------------------------------
   main_loop:
-    nop
     ;
+    ld hl,vblank_interrupt_total
+    ld a,1
+    call wait_and_reset
+    ;
+    nop
     ;
   jp main_loop
   ;
