@@ -26,6 +26,7 @@
     ld hl,character
     call load_vram
     ;
+    ;
     ei
     ;
   jp main_loop
