@@ -342,7 +342,7 @@
     .rept 64
       outi
     .endr
-
+    ;
     ; Load x-coordinates and character codes.
     ld hl,SAT_XC_START
     ld a,l
@@ -355,8 +355,8 @@
     .rept 128
       outi
     .endr
-  ret
-
+  jp update_sat_end
+  ;
   _DescendingLoad:
     ; Load y-coordinates.
     ld hl,SAT_Y_START
@@ -370,12 +370,12 @@
     .rept PLAYER_SIZE
       outi
     .endr
-
+    ;
     ld hl,SpriteBufferY+63    ; Point to last y-value in buffer.
     .rept 64-PLAYER_SIZE
       outd                    ; Output and decrement HL, thus going
     .endr                     ; backwards (descending) through the buffer.
-
+    ;
     ; Load x-coordinates and character codes
     ld hl,SAT_XC_START
     ld a,l
@@ -389,7 +389,7 @@
       outi
       outi
     .endr
-
+    ;
     ld hl,SpriteBufferXC+126
     ld de,-4
     .rept 64-PLAYER_SIZE
@@ -397,7 +397,8 @@
       outi
       add hl,de
     .endr
-  ret
+  update_sat_end:
+  ;
 .ends
 ;
 ; -----------------------------------------------------------------------------
@@ -418,13 +419,20 @@ update_bluelib:
   cpl
   ld (SATLoadMode),a
   ;
-  ; Wipe Y-buffer to get unused sprites out of the way.
+  ; Wipe Y-buffer.
   ld hl,WipeData
   ld de,SpriteBufferY
   ld bc,64
   ldir
+  ;
+  ; Set input_ports (word) to mirror current state of ports $dc and $dd.
+  in a,(INPUT_PORT_1)
+  ld (input_ports),a
+  in a,(INPUT_PORT_2)
+  ld (input_ports+1),a
+  ;
 ret
-
+;
 .ends
 ;
 ; =============================================================================
@@ -632,20 +640,6 @@ ret
   ret
 ;
 .ends
-;
-; -----------------------------------------------------------------------------
-.section "get_input_ports" free
-; -----------------------------------------------------------------------------
-  ; Set input_ports (word) to mirror current state of ports $dc and $dd.
-  ; Uses: AF
-  get_input_ports:
-    in a,(INPUT_PORT_1)
-    ld (input_ports),a
-    in a,(INPUT_PORT_2)
-    ld (input_ports+1),a
-  ret
-.ends
-;
 ; -----------------------------------------------------------------------------
 .section "get_word_from_table" free
 ; -----------------------------------------------------------------------------
