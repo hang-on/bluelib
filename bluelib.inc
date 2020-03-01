@@ -319,9 +319,9 @@
 ; =============================================================================
 ;
 ; -----------------------------------------------------------------------------
-.section "draw_bluelib" free
+.section "bluelib_utilize vblank" free
 ; -----------------------------------------------------------------------------
-  draw_bluelib:
+  bluelib_utilize_vblank:
   ; Load the vram sat with the SatY and SatXC buffers.
   ; Sonic 2 inspired flicker engine is in place: Flicker sprites by loading the
   ; SAT in ascending/descending order every other frame.
@@ -402,14 +402,14 @@
 .ends
 ;
 ; -----------------------------------------------------------------------------
-.section "update_bluelib" free
+.section "bluelib_update_framework" free
 ; -----------------------------------------------------------------------------
 WipeData:
   .rept 64
     .db SPRITE_TERMINATOR
   .endr
 ;
-update_bluelib:
+bluelib_update_framework:
   ; Reset the NextFreeSprite index at the beginning of every frame
   xor a
   ld (NextFreeSprite),a

@@ -50,11 +50,11 @@
     ;
     ; -------------------------------------------------------------------------
     ; Begin vblank critical code (DRAW).
-    call draw_bluelib
+    call bluelib_utilize_vblank
     ;
     ; -------------------------------------------------------------------------
     ; Begin general updating (UPDATE).
-    call update_bluelib
+    call bluelib_update_framework
     ;
   jp main_loop
   ;
