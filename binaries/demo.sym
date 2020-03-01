@@ -22,11 +22,11 @@
 0000:0401 WipeData
 0000:0441 bluelib_update_framework
 0000:04b4 add_sprite
-0000:04ee exit_add_sprite
+0000:04f2 exit_add_sprite
 0000:0051 clear_vram
-0000:0519 load_cram
-0000:04f7 load_vram
-0000:052e set_register
+0000:051d load_cram
+0000:04fb load_vram
+0000:0532 set_register
 0000:c0ca demosprite_x
 0000:c0cb demosprite_y
 0000:c0cc demosprite_char
@@ -36,5 +36,5 @@
 0001:4020 colors_end
 0001:4020 character
 0000:001b *WLA_SDSC_PRG_AUTHOR_PTR
-0000:0526 *WLA_SDSC_PRG_NAME_PTR
-0000:050a *WLA_SDSC_PRG_NOTES_PTR
+0000:052a *WLA_SDSC_PRG_NAME_PTR
+0000:050e *WLA_SDSC_PRG_NOTES_PTR

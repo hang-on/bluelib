@@ -483,7 +483,12 @@ ret
     pop bc
     ld a,b
     ld (de),a               ; Write the Y to the sprite buffer.
-
+    ; **
+    inc de
+    ld a,SPRITE_TERMINATOR
+    ld (de),a
+    ; **
+    ;
     ; Point DE to SpriteBufferXC[NextFreeSprite].
     ld a,(NextFreeSprite)
     add a,a               ; Table elements are words!
