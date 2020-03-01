@@ -241,7 +241,6 @@
   hline_counter db
   pause_flag db
   input_ports dw
-  tv_type db
   ;
   SpriteBufferY dsb 64
   SpriteBufferXC dsb 128
