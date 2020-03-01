@@ -58,6 +58,11 @@
 .equ PAL 1
 .equ FIRST_LINE_OF_VBLANK 192
 ;
+.equ PLAYER_SIZE 4          ; Number of tiles not part of asc/desc flicker.
+.equ ASCENDING 0
+.equ DESCENDING $ff
+;
+;
 .equ INTERRUPT_TYPE_BIT 7
 ;
 .equ REGISTER_0 0
@@ -235,8 +240,12 @@
   input_ports dw
   tv_type db
   ;
+  SpriteBufferY dsb 64
+  SpriteBufferXC dsb 128
+  NextFreeSprite db
+  SATLoadMode db             ; Ascending or descending - for flickering.
 .ends
-
+;
 .org 0
 .bank 0 slot 0
 ; -----------------------------------------------------------------------------
@@ -312,13 +321,110 @@
 ; -----------------------------------------------------------------------------
 .section "draw_bluelib" free
 ; -----------------------------------------------------------------------------
-  ;
+  draw_bluelib:
+  ; Load the vram sat with the SatY and SatXC buffers.
+  ; Sonic 2 inspired flicker engine is in place: Flicker sprites by loading the
+  ; SAT in ascending/descending order every other frame.
+  ld a,(SATLoadMode)
+  cp DESCENDING
+  jp z,_DescendingLoad
+    ; If not descending, then fall through to ascending load mode.
+
+    ; Load y-coordinates.
+    ld hl,SAT_Y_START
+    ld a,l
+    out (CONTROL_PORT),a
+    ld a,h
+    or VRAM_WRITE_COMMAND
+    out (CONTROL_PORT),a
+    ld hl,SpriteBufferY
+    ld c,DATA_PORT
+    .rept 64
+      outi
+    .endr
+
+    ; Load x-coordinates and character codes.
+    ld hl,SAT_XC_START
+    ld a,l
+    out (CONTROL_PORT),a
+    ld a,h
+    or VRAM_WRITE_COMMAND
+    out (CONTROL_PORT),a
+    ld hl,SpriteBufferXC
+    ld c,DATA_PORT
+    .rept 128
+      outi
+    .endr
+  ret
+
+  _DescendingLoad:
+    ; Load y-coordinates.
+    ld hl,SAT_Y_START
+    ld a,l
+    out (CONTROL_PORT),a
+    ld a,h
+    or VRAM_WRITE_COMMAND
+    out (CONTROL_PORT),a
+    ld c,DATA_PORT
+    ld hl,SpriteBufferY
+    .rept PLAYER_SIZE
+      outi
+    .endr
+
+    ld hl,SpriteBufferY+63    ; Point to last y-value in buffer.
+    .rept 64-PLAYER_SIZE
+      outd                    ; Output and decrement HL, thus going
+    .endr                     ; backwards (descending) through the buffer.
+
+    ; Load x-coordinates and character codes
+    ld hl,SAT_XC_START
+    ld a,l
+    out (CONTROL_PORT),a
+    ld a,h
+    or VRAM_WRITE_COMMAND
+    out (CONTROL_PORT),a
+    ld c,DATA_PORT
+    ld hl,SpriteBufferXC
+    .rept PLAYER_SIZE
+      outi
+      outi
+    .endr
+
+    ld hl,SpriteBufferXC+126
+    ld de,-4
+    .rept 64-PLAYER_SIZE
+      outi
+      outi
+      add hl,de
+    .endr
+  ret
 .ends
 ;
 ; -----------------------------------------------------------------------------
 .section "update_bluelib" free
 ; -----------------------------------------------------------------------------
+WipeData:
+  .rept 64
+    .db SPRITE_TERMINATOR
+  .endr
+;
+update_bluelib:
+  ; Reset the NextFreeSprite index at the beginning of every frame
+  xor a
+  ld (NextFreeSprite),a
   ;
+  ; Toggle ascending/descending sat load mode.
+  ld a,(SATLoadMode)
+  cpl
+  ld (SATLoadMode),a
+  ;
+  ; Wipe Y-buffer to get unused sprites out of the way.
+  ld hl,WipeData
+  ld de,SpriteBufferY
+  ld bc,64
+  ldir
+ret
+
 .ends
 ;
 ; =============================================================================
@@ -870,16 +976,6 @@
 ; B L U E L I B  S P R I T E  R O U T I N E S
 ; *****************************************************************************
 ;
-.equ PLAYER_SIZE 4          ; Number of tiles not part of asc/desc flicker.
-.equ ASCENDING 0
-.equ DESCENDING $ff
-;
-.ramsection "Spritelib Variables" slot 3
-  SpriteBufferY dsb 64
-  SpriteBufferXC dsb 128
-  NextFreeSprite db
-  SATLoadMode db             ; Ascending or descending - for flickering.
-.ends
 ;
 ; -----------------------------------------------------------------------------
 .section "add_sprite" free
@@ -939,110 +1035,3 @@
   ret
 .ends
 ;
-; -----------------------------------------------------------------------------
-.section "begin_sprites" free
-; -----------------------------------------------------------------------------
-  WipeData:
-    .rept 64
-      .db SPRITE_TERMINATOR
-    .endr
-  ;
-  begin_sprites:
-    ; Reset the NextFreeSprite index at the beginning of every frame
-    xor a
-    ld (NextFreeSprite),a
-    ;
-    ; Toggle ascending/descending sat load mode.
-    ld a,(SATLoadMode)
-    cpl
-    ld (SATLoadMode),a
-    ;
-    ; Wipe Y-buffer to get unused sprites out of the way.
-    ld hl,WipeData
-    ld de,SpriteBufferY
-    ld bc,64
-    ldir
-  ret
-.ends
-;
-; -----------------------------------------------------------------------------
-.section "load_sat" free
-; -----------------------------------------------------------------------------
-  ; Load the vram sat with the SatY and SatXC buffers.
-  ; Sonic 2 inspired flicker engine is in place: Flicker sprites by loading the
-  ; SAT in ascending/descending order every other frame.
-  load_sat:
-    ld a,(SATLoadMode)
-    cp DESCENDING
-    jp z,_DescendingLoad
-      ; If not descending, then fall through to ascending load mode.
-
-      ; Load y-coordinates.
-      ld hl,SAT_Y_START
-      ld a,l
-      out (CONTROL_PORT),a
-      ld a,h
-      or VRAM_WRITE_COMMAND
-      out (CONTROL_PORT),a
-      ld hl,SpriteBufferY
-      ld c,DATA_PORT
-      .rept 64
-        outi
-      .endr
-
-      ; Load x-coordinates and character codes.
-      ld hl,SAT_XC_START
-      ld a,l
-      out (CONTROL_PORT),a
-      ld a,h
-      or VRAM_WRITE_COMMAND
-      out (CONTROL_PORT),a
-      ld hl,SpriteBufferXC
-      ld c,DATA_PORT
-      .rept 128
-        outi
-      .endr
-  ret
-
-    _DescendingLoad:
-      ; Load y-coordinates.
-      ld hl,SAT_Y_START
-      ld a,l
-      out (CONTROL_PORT),a
-      ld a,h
-      or VRAM_WRITE_COMMAND
-      out (CONTROL_PORT),a
-      ld c,DATA_PORT
-      ld hl,SpriteBufferY
-      .rept PLAYER_SIZE
-        outi
-      .endr
-
-      ld hl,SpriteBufferY+63    ; Point to last y-value in buffer.
-      .rept 64-PLAYER_SIZE
-        outd                    ; Output and decrement HL, thus going
-      .endr                     ; backwards (descending) through the buffer.
-
-      ; Load x-coordinates and character codes
-      ld hl,SAT_XC_START
-      ld a,l
-      out (CONTROL_PORT),a
-      ld a,h
-      or VRAM_WRITE_COMMAND
-      out (CONTROL_PORT),a
-      ld c,DATA_PORT
-      ld hl,SpriteBufferXC
-      .rept PLAYER_SIZE
-        outi
-        outi
-      .endr
-
-      ld hl,SpriteBufferXC+126
-      ld de,-4
-      .rept 64-PLAYER_SIZE
-        outi
-        outi
-        add hl,de
-      .endr
-  ret
-.ends
