@@ -431,6 +431,11 @@ bluelib_update_framework:
   ld bc,64
   ldir
   ;
+  ; **
+  ld a,SPRITE_TERMINATOR
+  ld (SpriteBufferY),a
+  ; **
+  ;
   ; Set input_ports (word) to mirror current state of ports $dc and $dd.
   in a,(INPUT_PORT_1)
   ld (input_ports),a
