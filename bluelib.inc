@@ -426,10 +426,10 @@ bluelib_update_framework:
   ld (SATLoadMode),a
   ;
   ; Wipe Y-buffer.
-  ld hl,WipeData
-  ld de,SpriteBufferY
-  ld bc,64
-  ldir
+  ;ld hl,WipeData
+  ;ld de,SpriteBufferY
+  ;ld bc,64
+  ;ldir
   ;
   ; **
   ld a,SPRITE_TERMINATOR
