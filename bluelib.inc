@@ -446,27 +446,60 @@ ret
 ; =============================================================================
 ;
 ; -----------------------------------------------------------------------------
-.section "await_frame_interrupt" free
+.section "add_sprite" free
 ; -----------------------------------------------------------------------------
-  ; Await frame interrupt.
-  ; Repeatedly test bit 7 of VDPStatus until it is set (by the VDP interrupt
-  ; handler). Then reset this bit and return.
-  ; Entry: None
-  ; Exit: Bit 7 of variable VDPStatus is cleared.
-  ; Uses: VDPStatus (1 byte)
-  await_frame_interrupt:
+  ; Add a sprite of size = 1 character to the SAT.
+  ; Entry: A = Character code.
+  ;        B = vertical position, C = horizontal position.
+  ; Exit:
+  ; Uses: None - all registers saved
+  add_sprite:
+    ; Test for sprite overflow (more than 64 hardware sprites at once).
+    SAVE_REGISTERS
+    ld d,a                    ; Save the tile in unused register.
+    ld a,(NextFreeSprite)
+    inc a
+    cp 65
+    jp nc,exit_add_sprite
+    ld a,d                    ; Restore tile in A.
+    ;
     push af
-      -:
-        ld a,(VDPStatus)
-        bit 7,a
-      jp z,-
-      in a,(V_COUNTER_PORT)
-      ; Check this post: http://www.smspower.org/forums/8113-WaitForVBlankSlowerOnNTSCThanPALSystematicProblemWithWaitForVBlankNoInt
-      cp FIRST_LINE_OF_VBLANK+1
-      jp nz,-
-        res 7,a
-        ld (VDPStatus),a
-    pop af
+    push bc
+    ; Point DE to SpriteBufferY[NextFreeSprite].
+    ld a,(NextFreeSprite)
+    ld de,SpriteBufferY
+    add a,e
+    ld e,a
+    ld a,0
+    adc a,d
+    ld d,a
+
+    ; Retrieve Y and X coords.
+    pop bc
+    ld a,b
+    ld (de),a               ; Write the Y to the sprite buffer.
+
+    ; Point DE to SpriteBufferXC[NextFreeSprite].
+    ld a,(NextFreeSprite)
+    add a,a               ; Table elements are words!
+    ld de,SpriteBufferXC
+    add a,e
+    ld e,a
+    ld a,0
+    adc a,d
+    ld d,a
+    ;
+    ld a,c                ; Get the x-pos.
+    ld (de),a             ; Write it to the buffer.
+    inc de
+    pop af                ; Retrieve the charcode.
+    ld (de),a             ; Write it to the buffer
+
+    ld hl,NextFreeSprite
+    inc (hl)
+    ;
+    exit_add_sprite:
+    RESTORE_REGISTERS
   ret
 .ends
 ;
@@ -969,69 +1002,6 @@ ret
     ld a,REGISTER_WRITE_COMMAND
     or b
     out (CONTROL_PORT),a
-  ret
-.ends
-;
-; *****************************************************************************
-; B L U E L I B  S P R I T E  R O U T I N E S
-; *****************************************************************************
-;
-;
-; -----------------------------------------------------------------------------
-.section "add_sprite" free
-; -----------------------------------------------------------------------------
-  ; Add a sprite of size = 1 character to the SAT.
-  ; Entry: A = Character code.
-  ;        B = vertical position, C = horizontal position.
-  ; Exit:
-  ; Uses: None - all registers saved
-  add_sprite:
-    ; Test for sprite overflow (more than 64 hardware sprites at once).
-    SAVE_REGISTERS
-    ld d,a                    ; Save the tile in unused register.
-    ld a,(NextFreeSprite)
-    inc a
-    cp 65
-    jp nc,exit_add_sprite
-    ld a,d                    ; Restore tile in A.
-    ;
-    push af
-    push bc
-    ; Point DE to SpriteBufferY[NextFreeSprite].
-    ld a,(NextFreeSprite)
-    ld de,SpriteBufferY
-    add a,e
-    ld e,a
-    ld a,0
-    adc a,d
-    ld d,a
-
-    ; Retrieve Y and X coords.
-    pop bc
-    ld a,b
-    ld (de),a               ; Write the Y to the sprite buffer.
-
-    ; Point DE to SpriteBufferXC[NextFreeSprite].
-    ld a,(NextFreeSprite)
-    add a,a               ; Table elements are words!
-    ld de,SpriteBufferXC
-    add a,e
-    ld e,a
-    ld a,0
-    adc a,d
-    ld d,a
-    ;
-    ld a,c                ; Get the x-pos.
-    ld (de),a             ; Write it to the buffer.
-    inc de
-    pop af                ; Retrieve the charcode.
-    ld (de),a             ; Write it to the buffer
-
-    ld hl,NextFreeSprite
-    inc (hl)
-    ;
-    exit_add_sprite:
-    RESTORE_REGISTERS
   ret
 .ends
 ;

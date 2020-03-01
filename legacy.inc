@@ -17,6 +17,32 @@
 
 
 ; -----------------------------------------------------------------------------
+.section "await_frame_interrupt" free
+; -----------------------------------------------------------------------------
+  ; Await frame interrupt.
+  ; Repeatedly test bit 7 of VDPStatus until it is set (by the VDP interrupt
+  ; handler). Then reset this bit and return.
+  ; Entry: None
+  ; Exit: Bit 7 of variable VDPStatus is cleared.
+  ; Uses: VDPStatus (1 byte)
+  await_frame_interrupt:
+    push af
+      -:
+        ld a,(VDPStatus)
+        bit 7,a
+      jp z,-
+      in a,(V_COUNTER_PORT)
+      ; Check this post: http://www.smspower.org/forums/8113-WaitForVBlankSlowerOnNTSCThanPALSystematicProblemWithWaitForVBlankNoInt
+      cp FIRST_LINE_OF_VBLANK+1
+      jp nz,-
+        res 7,a
+        ld (VDPStatus),a
+    pop af
+  ret
+.ends
+;
+
+; -----------------------------------------------------------------------------
 .section "load_vdp_registers" free
 ; -----------------------------------------------------------------------------
   load_vdp_registers:
