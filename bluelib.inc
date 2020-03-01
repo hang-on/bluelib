@@ -14,8 +14,8 @@
 .equ NAME_TABLE_START $3800
 .equ VISIBLE_NAME_TABLE_SIZE 2*32*24
 .equ FULL_NAME_TABLE_SIZE 2*32*28
-.equ SPRITE_BANK_START $2000
-.equ BACKGROUND_BANK_START $0000
+.equ SPRITE_BANK_START $0000
+.equ BACKGROUND_BANK_START $2000
 .equ CHARACTER_SIZE 32
 ;
 .equ COLOR_0 0
@@ -76,6 +76,10 @@
 .equ REGISTER_8 8
 .equ REGISTER_9 9
 .equ REGISTER_10 10
+;
+; The following register constants are named based on how they differ from the
+; standard values initialized by the hardware.
+.equ NORMAL_DISPLAY %11100000
 ;
 ; Memory map and initialization:
 .equ RAM_START $c000
@@ -977,7 +981,7 @@ ret
 .section "add_sprite" free
 ; -----------------------------------------------------------------------------
   ; Add a sprite of size = 1 character to the SAT.
-  ; Entry: A = Character code (character in bank 2).
+  ; Entry: A = Character code.
   ;        B = vertical position, C = horizontal position.
   ; Exit:
   ; Uses: None - all registers saved

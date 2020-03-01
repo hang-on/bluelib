@@ -22,16 +22,26 @@
     call load_cram
     ;
     ld bc,CHARACTER_SIZE
-    ld de,SPRITE_BANK_START
+    ld de,SPRITE_BANK_START + CHARACTER_SIZE
     ld hl,character
     call load_vram
     ;
+    ld a,16
+    ld (demosprite_y),a
+    ld a,16
+    ld (demosprite_x),a
+    ld a,1
+    ld (demosprite_char),a
     ;
     ei
     halt
     halt
     xor a
     ld (vblank_counter),a
+    ;
+    ld a,NORMAL_DISPLAY
+    ld b,1
+    call set_register
     ;
   jp main_loop
   ;
@@ -55,6 +65,13 @@
     ; -------------------------------------------------------------------------
     ; Begin general updating (UPDATE).
     call bluelib_update_framework
+    ;
+    ld a,(demosprite_x)
+    ld c,a
+    ld a,(demosprite_y)
+    ld b,a
+    ld a,(demosprite_char)
+    call add_sprite
     ;
   jp main_loop
   ;
