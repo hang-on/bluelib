@@ -14,7 +14,7 @@
 ; -----------------------------------------------------------------------------
   init:
     ; Run this function once (on game load). Assume we come here from bluelib
-    ; boot code with initialized vram and memory control registers.
+    ; boot code with initialized vram and memory control registers (INIT).
     ;
     ld a,COLOR_0
     ld b,colors_end-colors
@@ -30,16 +30,30 @@
     ei
     halt
     halt
+    xor a
+    ld (vblank_counter),a
     ;
   jp main_loop
   ;
   ; ---------------------------------------------------------------------------
   main_loop:
     ;
-    ld hl,vblank_interrupt_total
-    ld a,1
-    call wait_and_reset
+    ; Wait until vblank interrupt handler increments counter.
+    ld hl,vblank_counter
+    -:
+      ld a,(hl)
+      cp 0
+    jp z,-
+    ; Reset counter.
+    xor a
+    ld (hl),a
     ;
+    ; -------------------------------------------------------------------------
+    ; Begin vblank critical code (DRAW).
+    nop
+    ;
+    ; -------------------------------------------------------------------------
+    ; Begin general updating (UPDATE).
     nop
     ;
   jp main_loop

@@ -229,8 +229,8 @@
 .ramsection "bluelib global variables" slot 3
 ; -----------------------------------------------------------------------------
   VDPStatus db
-  vblank_interrupt_total db
-  hline_interrupt_total db
+  vblank_counter db
+  hline_counter db
   pause_flag db
   input_ports dw
   tv_type db
@@ -275,12 +275,12 @@
       bit INTERRUPT_TYPE_BIT,a
       jp z,+
         ; VBlank interrupt.
-        ld hl,vblank_interrupt_total
+        ld hl,vblank_counter
         inc (hl)
         jp ++
       +:
         ; H-Line interrupt.
-        ld hl,hline_interrupt_total
+        ld hl,hline_counter
         inc (hl)
       ++:
     pop hl
@@ -847,27 +847,6 @@
     ld a,REGISTER_WRITE_COMMAND
     or b
     out (CONTROL_PORT),a
-  ret
-.ends
-;
-; -----------------------------------------------------------------------------
-.section "Wait and reset" free
-; -----------------------------------------------------------------------------
-  ; Wait for an interrupt counter pointed to by HL to reach a given threshold.
-  ; Then reset the interrupt counter before moving on.
-  ; Entry: A = Threshold value.
-  ;        HL = Pointer to bluelib interrupt counter.
-  ; Uses: AF
-  wait_and_reset:
-    push bc
-    ld b,a
-    -:
-      ld a,(hl)
-      cp b
-    jp nz,-
-    xor a
-    ld (hl),a
-    pop bc
   ret
 .ends
 ;
