@@ -12,9 +12,9 @@
 0000:0017 initial_memory_control_register_values
 0000:001b initial_memory_control_register_values_end
 0000:0051 clear_vram
-0000:00c1 load_cram
-0000:009f load_vram
-0000:00ce wait_and_reset
+0000:00bb load_cram
+0000:0099 load_vram
+0000:00c8 wait_and_reset
 0000:c000 SpriteBufferY
 0000:c040 SpriteBufferXC
 0000:c0c0 NextFreeSprite
@@ -22,10 +22,10 @@
 0000:c0c9 temp_byte
 0000:c0ca temp_word
 0000:0071 init
-0000:0093 main_loop
+0000:008d main_loop
 0001:4000 colors
 0001:4020 colors_end
 0001:4020 character
 0000:001b *WLA_SDSC_PRG_AUTHOR_PTR
-0000:00d9 *WLA_SDSC_PRG_NAME_PTR
-0000:00b2 *WLA_SDSC_PRG_NOTES_PTR
+0000:00d3 *WLA_SDSC_PRG_NAME_PTR
+0000:00ac *WLA_SDSC_PRG_NOTES_PTR

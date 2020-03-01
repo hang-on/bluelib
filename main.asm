@@ -28,9 +28,8 @@
     ;
     ;
     ei
-    ld hl,vblank_interrupt_total
-    ld a,2
-    call wait_and_reset
+    halt
+    halt
     ;
   jp main_loop
   ;
