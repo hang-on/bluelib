@@ -404,6 +404,7 @@
       add hl,de
     .endr
   update_sat_end:
+  ret
   ;
 .ends
 ;
